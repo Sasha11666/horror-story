@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Horror</title>
+</head>
+<body>
+  <div class="canvas">
+    <div class="audio-block">
+      <h1 class="title">Write your story</h1>
+      <div class="main"></div>
+      <audio controls>
+        <source src="audio/the_ring.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+    <div class="container">
+      <ul class="stories" id="stories-list">
+        <!-- List of comments is rendered from js -->
+      </ul>
+      <div class="add-form" id="form">
+        <input
+          type="text"
+          class="add-form-name"
+          placeholder="The title of your story"
+          id="input-name"
+        />
+        <textarea
+          type="textarea"
+          class="add-form-text"
+          placeholder="Write your horrific story.."
+          rows="20"
+          id="input-story"
+        ></textarea>
+        <div class="add-form-row">
+          <button type="button" class="add-form-button" id="submit-button" >Publish</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="fly" id="fly">
+    
+  </div>
+ 
+  
+
+  <script src="main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</body>
+</html>
