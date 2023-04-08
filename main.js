@@ -9,23 +9,78 @@ const editedTextArea = document.querySelectorAll('.edit-text');
 const flyActive = document.getElementById('fly');
 const link = document.querySelector('a.dynamic');
 
+
 const stories = [
   {
     name: 'Samara Morgan',
     text: "I can't stop it",
     isEdit: false,
-    
+    isOpen: "",
+    percent: "",
+    display: '',
     
   },
   {
     name: 'Willy Dam',
     text: 'Where is your fear, there is me',
     isEdit: false,
-    
+    isOpen: "",
+    percent: "",
+    display: '',
   }
 ];
 
 let flyMove = false;
+
+
+const initOpenButton = () => {
+  const openButtons = document.querySelectorAll('.open-button');
+  for(const openButton of openButtons) {
+    const index = openButton.dataset.index;
+    openButton.addEventListener('click', () => {
+      if(stories.length > 1) {
+        if(index == 0) {
+          if(stories[index].isOpen == '') {
+            stories[index].isOpen = 'opened';
+            stories[index].percent = 'open';
+            console.log(stories[+index + 1]);
+            stories[+index + 1].display = 'hidden';
+            renderStories();
+          } else {
+            stories[index].isOpen = '';
+            stories[index].percent = '';
+            stories[+index + 1].display = '';
+            renderStories();
+          }
+        } else {
+          if(stories[index].isOpen == '') {
+            stories[index].isOpen = 'opened';
+            stories[index].percent = 'open';
+            console.log(stories[+index - 1]);
+            stories[+index - 1].display = 'hidden';
+            renderStories();
+          } else {
+            stories[index].isOpen = '';
+            stories[index].percent = '';
+            stories[+index - 1].display = '';
+            renderStories();
+          }
+        }
+      } else {
+        if(stories[index].isOpen == '') {
+          stories[index].isOpen = 'opened';
+          stories[index].percent = 'open';
+          renderStories();
+        } else {
+          stories[index].isOpen = '';
+          stories[index].percent = '';
+          renderStories();
+        }
+      }
+    })
+  }
+  
+}
 
 const initDownloadButton = () => {
   const downloadButtons = document.querySelectorAll('.download-button');
@@ -98,23 +153,26 @@ const renderStories = () => {
       <div>${story.name}</div>
     </div>  
     <div class="story-body">
-      <textarea id="${index}0" class="edit-text" type="textarea"></textarea>
+      <textarea id="${index}0" class="edit-text" type="textarea">${story.text}</textarea>
     </div>
       <button data-index="${index}" class="save-button" type="button">Save</button> 
   </li>`
      :
-   `<li class="story">
+   `<li class="story ${story.isOpen} ${story.display}">
     <div class="story-header">
       <div>${story.name}</div>
     </div> 
-    <div class="story-body">
-      <div class="story-text">
+    <div class="story-body ${story.percent}">
+      <div class="story-text ${story.isOpen}">
         ${story.text}
       </div>
     </div>
-    <button data-index="${index}" class="edit-button story-button" type="button">Edit</button>
-    <button data-index="${index}" class="delete-button story-button" type="button">Delete</button>
-    <button data-index="${index}" class="download-button story-button" type="button"><a class="dynamic">Download</a></button>
+    <div class="buttons">
+      <button data-index="${index}" class="edit-button story-button" type="button">Edit</button>
+      <button data-index="${index}" class="delete-button story-button" type="button">Delete</button>
+      <button data-index="${index}" class="download-button story-button" type="button"><a   class="dynamic">Download</a></button>
+      <button data-index="${index}" class="open-button" type="button"><img src="images/eye.svg"></button>
+    </div>
 
   </li>`
   })
@@ -126,6 +184,7 @@ const renderStories = () => {
   initEditButtons();
   initSaveButton();
   initDownloadButton();
+  initOpenButton();
 }
 
 renderStories();
@@ -157,3 +216,6 @@ function addStory() {
 submitButton.addEventListener('click', () => {
   addStory();
 })
+
+
+
